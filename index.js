@@ -17,6 +17,9 @@ app.use(userRouter);
 const profileRouter = require("./profile/router");
 app.use(profileRouter);
 
+const imageRouter = require("./image/router");
+app.use(imageRouter);
+
 app.get("/", (req, res) => {
   res.json("its working!!!");
 });
