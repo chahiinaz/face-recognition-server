@@ -6,27 +6,27 @@ const bcrypt = require("bcrypt");
 
 const { toJWT } = require("../auth/jwt");
 
-router.post("/signup", async (request, response) => {
+router.post("/register", async (request, response) => {
   if (!request.body.email || !request.body.password) {
     return response
       .status(400)
-      .send("Missing email or password in request body");
+      .json("Missing email or password in request body");
   }
   const hashedPassword = bcrypt.hashSync(request.body.password, 10);
   try {
     await User.create({
       ...request.body,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    response.status(201).send("User created");
+    response.status(201).json("User created");
   } catch (error) {
     console.log(error.name);
     switch (error.name) {
       case "SequelizeUniqueConstraintError":
-        return response.status(400).send({ message: "Email not unique" });
+        return response.status(400).json({ message: "Email not unique" });
 
       default:
-        return response.status(400).send("Baaaddd request");
+        return response.status(400).json("Baaaddd request");
     }
   }
 });
@@ -37,8 +37,8 @@ router.post("/login", async (request, response) => {
     const user = await User.findOne({ where: { email: request.body.email } });
 
     if (!user) {
-      response.status(400).send({
-        message: "User with that email does not exist"
+      response.status(400).json({
+        message: "User with that email does not exist",
       });
     }
     const passwordValid = bcrypt.compareSync(
@@ -47,21 +47,21 @@ router.post("/login", async (request, response) => {
     );
     if (passwordValid) {
       const jwt = toJWT({ id: user.id });
-      return response.status(200).send({
+      return response.status(200).json({
         jwt: jwt,
         email: user.email,
-        username: user.username,
-        id: user.id
+        name: user.name,
+        id: user.id,
       });
     }
     if (!passwordValid) {
-      response.status(400).send({
-        message: "Password was incorrect"
+      response.status(400).json({
+        message: "Password was incorrect",
       });
     }
   } catch (error) {
-    response.status(400).send({
-      message: `Error ${error.name}: ${error.message}`
+    response.status(400).json({
+      message: `Error ${error.name}: ${error.message}`,
     });
   }
 });

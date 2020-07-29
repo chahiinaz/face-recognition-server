@@ -14,4 +14,8 @@ app.use(corsMiddleware);
 const userRouter = require("./user/router");
 app.use(userRouter);
 
+app.get("/", (req, res) => {
+  res.json("its working!!!");
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}`));

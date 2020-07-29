@@ -15,12 +15,12 @@ async function auth(request, response, next) {
       request.user = user;
       next();
     } catch (error) {
-      response.status(400).send({
+      response.status(400).json({
         message: `Error ${error.name}: ${error.message}`,
       });
     }
   } else {
-    response.status(401).send({
+    response.status(401).json({
       message: "Please supply some valid credentials",
     });
   }
