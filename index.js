@@ -14,6 +14,9 @@ app.use(corsMiddleware);
 const userRouter = require("./user/router");
 app.use(userRouter);
 
+const profileRouter = require("./profile/router");
+app.use(profileRouter);
+
 app.get("/", (req, res) => {
   res.json("its working!!!");
 });
