@@ -21,7 +21,8 @@ const imageRouter = require("./image/router");
 app.use(imageRouter);
 
 app.get("/", (req, res) => {
-  res.json("its working!!!", console.log(process.env.DATABASE_URL));
+  console.log(process.env.DATABASE_URL);
+  res.json("its working!!!");
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
