@@ -52,6 +52,7 @@ router.post("/login", async (request, response) => {
         email: user.email,
         name: user.name,
         id: user.id,
+        entries: user.entries,
       });
     }
     if (!passwordValid) {

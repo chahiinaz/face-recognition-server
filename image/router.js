@@ -7,6 +7,7 @@ router.put("/image", function (req, res, next) {
   const { id } = req.body;
   User.increment({ entries: 1 }, { where: { id: id } })
     .then((data) => {
+      console.log("Dataaaaaa", data);
       res.json(data);
     })
     .catch((error) => next(error));

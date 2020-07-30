@@ -5,7 +5,7 @@ const User = db.define("user", {
   name: { type: Sequelize.STRING, allowNull: false },
   email: { type: Sequelize.STRING, unique: true, allowNull: false },
   password: { type: Sequelize.STRING, allowNull: false },
-  entries: { type: Sequelize.INTEGER },
+  entries: { type: Sequelize.INTEGER, defaultValue: "0" },
 });
 
 module.exports = User;
