@@ -1,7 +1,27 @@
 const express = require("express");
-
 const app = express();
 
-app.listen(3000, () => {
-  console.log("app is running on port 300");
+const port = process.env.PORT || 4000;
+
+const bodyParser = require("body-parser");
+const parserMiddleware = bodyParser.json();
+app.use(parserMiddleware);
+
+const cors = require("cors");
+const corsMiddleware = cors();
+app.use(corsMiddleware);
+
+const userRouter = require("./user/router");
+app.use(userRouter);
+
+const profileRouter = require("./profile/router");
+app.use(profileRouter);
+
+const imageRouter = require("./image/router");
+app.use(imageRouter);
+
+app.get("/", (req, res) => {
+  res.json("its working!!!");
 });
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
